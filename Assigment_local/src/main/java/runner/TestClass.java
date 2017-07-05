@@ -1,3 +1,5 @@
+package runner;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -12,6 +14,7 @@ import org.testng.annotations.Test;
 import java.util.concurrent.TimeUnit;
 
 public class TestClass {
+    public static final String CHROME_DRIVER_PATH = "chromedriver.exe";
     private WebDriver driver;
     private String appURL = "file:///C:/Users/Daniel/Documents/automated%20testing/Local%20Webs/busqueda/index.html";
     private String GOOGLE_INPUT_ID = "searchbox";
@@ -23,7 +26,7 @@ public class TestClass {
     // Setting chromedriver driver
     public void testSetUp() {
         // Call chromedriver.
-        System.setProperty("webdriver.chrome.driver", "C:/Users/Daniel/Documents/automated testing/ejLocales/chromedriver.exe");
+        System.setProperty("webdriver.chrome.driver", CHROME_DRIVER_PATH);
         //Disable barInfo
         ChromeOptions options = new ChromeOptions();
         options.addArguments("disable-infobars");
@@ -36,7 +39,7 @@ public class TestClass {
         By FIRST_LINK = By.xpath("//div[1]/a");
         By SECOND_CAT = By.xpath("//a[2]/img");
         String SEARCH_CATS = "gatos";
-        String CAT_TITLE = "derp.jpg (1200×640)";
+        String CAT_TITLE = "derp.jpg";
         //Open Page
         driver.get(appURL);
         //Fill out search input
@@ -54,7 +57,7 @@ public class TestClass {
         elementCat.click();
         //Check if that cat is the right cat
         String getTitle = driver.getTitle();
-        Assert.assertEquals(getTitle, CAT_TITLE);
+        Assert.assertTrue(getTitle.contains(CAT_TITLE));
     }
 
     @Test
@@ -178,6 +181,6 @@ public class TestClass {
       @AfterClass
     // Closing Browser when finish the test
     public void tearDown() {
-        //driver.quit();
+        driver.quit();
     }
 }
